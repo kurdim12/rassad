@@ -21,7 +21,14 @@ import Login from "./pages/auth/Login.tsx";
 import Signup from "./pages/auth/Signup.tsx";
 import ForgotPassword from "./pages/auth/ForgotPassword.tsx";
 import ResetPassword from "./pages/auth/ResetPassword.tsx";
-import Dashboard from "./pages/Dashboard.tsx";
+import { DashboardLayout } from "./components/dashboard/DashboardLayout";
+import Overview from "./pages/dashboard/Overview";
+import Verify from "./pages/dashboard/Verify";
+import Collections from "./pages/dashboard/Collections";
+import Alerts from "./pages/dashboard/Alerts";
+import Analytics from "./pages/dashboard/Analytics";
+import Profile from "./pages/dashboard/Profile";
+import Admin from "./pages/dashboard/Admin";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -58,10 +65,18 @@ const App = () => (
                 path="/dashboard"
                 element={
                   <ProtectedRoute>
-                    <Dashboard />
+                    <DashboardLayout />
                   </ProtectedRoute>
                 }
-              />
+              >
+                <Route index element={<Overview />} />
+                <Route path="verify" element={<Verify />} />
+                <Route path="collections" element={<Collections />} />
+                <Route path="alerts" element={<Alerts />} />
+                <Route path="analytics" element={<Analytics />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="admin" element={<Admin />} />
+              </Route>
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
