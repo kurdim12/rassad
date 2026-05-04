@@ -10,7 +10,7 @@ import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Logo } from "@/components/rasad/Logo";
-import { Badge } from "@/components/rasad/Badge";
+import { VerdictBadge } from "@/components/rasad/Badge";
 import { ConfidenceRing } from "@/components/rasad/ConfidenceRing";
 import { toast } from "sonner";
 
@@ -25,7 +25,7 @@ export default function Dashboard() {
   const [showOnboard, setShowOnboard] = useState(false);
   const [query, setQuery] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
-  const [result, setResult] = useState<null | { verdict: "verified" | "fake" | "uncertain"; confidence: number; claim: string }>(null);
+  const [result, setResult] = useState<null | { verdict: "trusted" | "fake" | "suspicious"; confidence: number; claim: string }>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -54,9 +54,9 @@ export default function Dashboard() {
     setResult(null);
     // Demo simulation
     await new Promise((r) => setTimeout(r, 1400));
-    const verdicts = ["verified", "fake", "uncertain"] as const;
+    const verdicts = ["trusted", "fake", "suspicious"] as const;
     const v = verdicts[Math.floor(Math.random() * verdicts.length)];
-    const c = v === "verified" ? 88 + Math.floor(Math.random() * 10) : v === "fake" ? 82 + Math.floor(Math.random() * 12) : 50 + Math.floor(Math.random() * 25);
+    const c = v === "trusted" ? 88 + Math.floor(Math.random() * 10) : v === "fake" ? 82 + Math.floor(Math.random() * 12) : 50 + Math.floor(Math.random() * 25);
     setResult({ verdict: v, confidence: c, claim: query });
     setAnalyzing(false);
   };
@@ -123,9 +123,7 @@ export default function Dashboard() {
               <ConfidenceRing value={result.confidence} />
               <div className="flex-1">
                 <div className="mb-2 flex flex-wrap items-center gap-2">
-                  <Badge variant={result.verdict === "verified" ? "verified" : result.verdict === "fake" ? "fake" : "warn"}>
-                    {result.verdict === "verified" ? "موثوق" : result.verdict === "fake" ? "مضلّل" : "غير مؤكد"}
-                  </Badge>
+                  <VerdictBadge verdict={result.verdict} />
                   <span className="mono text-xs text-muted-foreground">CONF {result.confidence}%</span>
                 </div>
                 <p className="text-sm text-foreground">{result.claim}</p>
