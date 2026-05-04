@@ -14,6 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
+      articles: {
+        Row: {
+          body: string | null
+          category: string | null
+          confidence: number | null
+          created_at: string
+          id: string
+          metadata: Json
+          published_at: string
+          source_url: string | null
+          summary: string | null
+          title: string
+          type: string
+          updated_at: string
+          verdict: string | null
+        }
+        Insert: {
+          body?: string | null
+          category?: string | null
+          confidence?: number | null
+          created_at?: string
+          id?: string
+          metadata?: Json
+          published_at?: string
+          source_url?: string | null
+          summary?: string | null
+          title: string
+          type: string
+          updated_at?: string
+          verdict?: string | null
+        }
+        Update: {
+          body?: string | null
+          category?: string | null
+          confidence?: number | null
+          created_at?: string
+          id?: string
+          metadata?: Json
+          published_at?: string
+          source_url?: string | null
+          summary?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+          verdict?: string | null
+        }
+        Relationships: []
+      }
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          handled: boolean
+          id: string
+          message: string
+          name: string
+          subject: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          handled?: boolean
+          id?: string
+          message: string
+          name: string
+          subject?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          handled?: boolean
+          id?: string
+          message?: string
+          name?: string
+          subject?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -59,6 +137,45 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      verifications: {
+        Row: {
+          confidence: number
+          created_at: string
+          explanation: string | null
+          id: string
+          input_text: string
+          input_url: string | null
+          model: string | null
+          sources: Json
+          user_id: string
+          verdict: string
+        }
+        Insert: {
+          confidence: number
+          created_at?: string
+          explanation?: string | null
+          id?: string
+          input_text: string
+          input_url?: string | null
+          model?: string | null
+          sources?: Json
+          user_id: string
+          verdict: string
+        }
+        Update: {
+          confidence?: number
+          created_at?: string
+          explanation?: string | null
+          id?: string
+          input_text?: string
+          input_url?: string | null
+          model?: string | null
+          sources?: Json
+          user_id?: string
+          verdict?: string
         }
         Relationships: []
       }
