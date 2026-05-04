@@ -10,7 +10,7 @@ import { VerdictBadge } from "@/components/rasad/Badge";
 import { ConfidenceRing } from "@/components/rasad/ConfidenceRing";
 import { formatDistanceToNow } from "date-fns";
 import { ar } from "date-fns/locale";
-import type { Verification } from "./types";
+import type { Verification } from "@/components/dashboard/types";
 
 export default function Overview() {
   const { user } = useAuth();
