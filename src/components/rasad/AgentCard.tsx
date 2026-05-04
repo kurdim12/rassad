@@ -6,7 +6,7 @@ export const AgentCard = ({
   Icon: LucideIcon; title: string; desc: string; status?: string; placeholder?: string; accent?: boolean;
 }) => (
   <div className={`glass-panel group relative overflow-hidden p-6 transition hover:-translate-y-0.5 ${accent ? "border-primary/30" : ""}`}>
-    <div className="absolute -left-12 -top-12 h-40 w-40 rounded-full bg-primary/10 blur-3xl opacity-0 transition group-hover:opacity-100" />
+    <div className="absolute -start-12 -top-12 h-40 w-40 rounded-full bg-primary/10 blur-3xl opacity-0 transition group-hover:opacity-100" />
     <div className="flex items-start justify-between">
       <div className="grid h-12 w-12 place-items-center rounded-xl border border-white/[0.08] bg-white/[0.03]">
         <Icon className="h-6 w-6 text-primary" strokeWidth={1.75} />

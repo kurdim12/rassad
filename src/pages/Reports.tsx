@@ -44,7 +44,7 @@ const Reports = () => (
             <div className="relative h-44 overflow-hidden bg-surface-2">
               <div className="absolute inset-0 grid-bg opacity-40" />
               <div className="absolute inset-0 radar-bg opacity-60" />
-              <span className="absolute right-3 top-3 chip mono">{r.tag}</span>
+              <span className="absolute end-3 top-3 chip mono">{r.tag}</span>
             </div>
             <div className="space-y-3 p-6">
               <h3 className="text-lg font-bold leading-8">{r.title}</h3>

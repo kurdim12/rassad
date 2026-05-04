@@ -66,7 +66,7 @@
 @layer base {
   * { @apply border-border; }
 
-  html { font-family: 'IBM Plex Sans Arabic', 'Tajawal', system-ui, sans-serif; }
+  html { font-family: 'Noto Kufi Arabic', system-ui, sans-serif; }
 
   body {
     @apply bg-background text-foreground antialiased;
@@ -78,9 +78,12 @@
     background-size: auto, auto, 56px 56px, 56px 56px;
   }
 
-  h1, h2, h3, h4 { font-family: 'Tajawal', 'IBM Plex Sans Arabic', sans-serif; font-weight: 800; letter-spacing: -0.01em; }
+  h1, h2, h3, h4 { font-family: 'Noto Kufi Arabic', sans-serif; font-weight: 800; letter-spacing: -0.005em; }
 
-  .font-mono, code, .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  /* Latin display (numbers, codes, EN labels) — Bebas for impact */
+  .display, .font-display { font-family: 'Bebas Neue', 'Noto Kufi Arabic', sans-serif; letter-spacing: 0.02em; }
+
+  .font-mono, code, .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 }
 
 @layer components {

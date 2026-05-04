@@ -145,7 +145,7 @@ const Home = () => {
               <div className="mono mb-3 text-[10px] tracking-widest text-muted-foreground">STEP 0{i + 1}</div>
               <s.Icon className="mb-4 h-6 w-6 text-primary" strokeWidth={1.75} />
               <div className="text-sm font-bold leading-6">{s.title}</div>
-              {i < 5 && <div className="absolute -left-2 top-1/2 hidden h-px w-4 bg-primary/40 lg:block" />}
+              {i < 5 && <div className="absolute -end-2 top-1/2 hidden h-px w-4 bg-primary/40 lg:block" />}
             </div>
           ))}
         </div>

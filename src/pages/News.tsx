@@ -55,8 +55,8 @@ const News = () => (
       <div className="glass-panel p-5">
         <div className="grid gap-3 md:grid-cols-12">
           <div className="relative md:col-span-5">
-            <Search className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input placeholder="ابحث في القصص المتحقق منها…" className="w-full rounded-md border border-white/[0.08] bg-background/40 py-2.5 pr-10 pl-3 text-sm outline-none focus:border-primary/40" />
+            <Search className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input placeholder="ابحث في القصص المتحقق منها…" className="w-full rounded-md border border-white/[0.08] bg-background/40 py-2.5 pe-10 ps-3 text-sm outline-none focus:border-primary/40" />
           </div>
           {[
             { Icon: Calendar, ph: "التاريخ" },
@@ -64,8 +64,8 @@ const News = () => (
             { Icon: Filter, ph: "الحكم" },
           ].map((f, i) => (
             <div key={i} className="relative md:col-span-2">
-              <f.Icon className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <select className="w-full appearance-none rounded-md border border-white/[0.08] bg-background/40 py-2.5 pr-10 pl-3 text-sm outline-none">
+              <f.Icon className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <select className="w-full appearance-none rounded-md border border-white/[0.08] bg-background/40 py-2.5 pe-10 ps-3 text-sm outline-none">
                 <option>{f.ph}</option>
               </select>
             </div>
@@ -91,7 +91,7 @@ const News = () => (
         <div className="relative min-h-[280px] bg-gradient-to-br from-surface-2 to-background">
           <div className="absolute inset-0 grid-bg opacity-30" />
           <div className="absolute inset-0 radar-bg" />
-          <div className="absolute right-4 top-4 chip mono">{featured.category}</div>
+          <div className="absolute end-4 top-4 chip mono">{featured.category}</div>
         </div>
         <div className="p-8">
           <VerdictBadge verdict="trusted" />
