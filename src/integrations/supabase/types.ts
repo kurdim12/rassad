@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      alert_notifications: {
+        Row: {
+          alert_id: string | null
+          article_id: string | null
+          created_at: string
+          id: string
+          matched_keyword: string
+          read: boolean
+          user_id: string
+        }
+        Insert: {
+          alert_id?: string | null
+          article_id?: string | null
+          created_at?: string
+          id?: string
+          matched_keyword: string
+          read?: boolean
+          user_id: string
+        }
+        Update: {
+          alert_id?: string | null
+          article_id?: string | null
+          created_at?: string
+          id?: string
+          matched_keyword?: string
+          read?: boolean
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "alert_notifications_alert_id_fkey"
+            columns: ["alert_id"]
+            isOneToOne: false
+            referencedRelation: "keyword_alerts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "alert_notifications_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       articles: {
         Row: {
           body: string | null
@@ -62,6 +107,72 @@ export type Database = {
         }
         Relationships: []
       }
+      collection_items: {
+        Row: {
+          added_at: string
+          collection_id: string
+          id: string
+          verification_id: string
+        }
+        Insert: {
+          added_at?: string
+          collection_id: string
+          id?: string
+          verification_id: string
+        }
+        Update: {
+          added_at?: string
+          collection_id?: string
+          id?: string
+          verification_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collection_items_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collection_items_verification_id_fkey"
+            columns: ["verification_id"]
+            isOneToOne: false
+            referencedRelation: "verifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collections: {
+        Row: {
+          color: string | null
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
@@ -89,6 +200,33 @@ export type Database = {
           message?: string
           name?: string
           subject?: string | null
+        }
+        Relationships: []
+      }
+      keyword_alerts: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          keyword: string
+          match_verdicts: string[]
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          keyword: string
+          match_verdicts?: string[]
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          keyword?: string
+          match_verdicts?: string[]
+          user_id?: string
         }
         Relationships: []
       }
@@ -146,8 +284,10 @@ export type Database = {
           created_at: string
           explanation: string | null
           id: string
+          image_url: string | null
           input_text: string
           input_url: string | null
+          kind: string
           model: string | null
           sources: Json
           user_id: string
@@ -158,8 +298,10 @@ export type Database = {
           created_at?: string
           explanation?: string | null
           id?: string
+          image_url?: string | null
           input_text: string
           input_url?: string | null
+          kind?: string
           model?: string | null
           sources?: Json
           user_id: string
@@ -170,8 +312,10 @@ export type Database = {
           created_at?: string
           explanation?: string | null
           id?: string
+          image_url?: string | null
           input_text?: string
           input_url?: string | null
+          kind?: string
           model?: string | null
           sources?: Json
           user_id?: string
