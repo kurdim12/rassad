@@ -2,6 +2,7 @@ import { Layout } from "@/components/rasad/Layout";
 import { SectionHeader } from "@/components/rasad/SectionHeader";
 import { VerdictBadge } from "@/components/rasad/Badge";
 import { ConfidenceRing } from "@/components/rasad/ConfidenceRing";
+import { DocumentedFakes } from "@/components/rasad/DocumentedFakes";
 import { Seo } from "@/components/seo/Seo";
 import { JsonLd, organizationSchema, webApplicationSchema, buildFaqSchema } from "@/components/seo/JsonLd";
 import { Link } from "react-router-dom";
@@ -332,6 +333,9 @@ const Home = () => {
           ))}
         </div>
       </section>
+
+      {/* DOCUMENTED FAKES — real cases with sources */}
+      <DocumentedFakes />
 
       {/* TESTIMONIALS */}
       <section className="border-y border-white/[0.06] bg-surface/30">
