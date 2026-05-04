@@ -14,8 +14,8 @@ export const NewsCard = ({
         style={{ backgroundImage: image ? `url(${image})` : "linear-gradient(135deg,#16213e,#0f1722)" }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-      <div className="absolute right-3 top-3"><VerdictBadge verdict={verdict} /></div>
-      <span className="absolute left-3 top-3 chip mono">{category}</span>
+      <div className="absolute end-3 top-3"><VerdictBadge verdict={verdict} /></div>
+      <span className="absolute start-3 top-3 chip mono">{category}</span>
     </div>
 
     <div className="space-y-3 p-5">
