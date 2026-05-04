@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { Layout } from "@/components/rasad/Layout";
 import { SectionHeader } from "@/components/rasad/SectionHeader";
 import { Breadcrumbs } from "@/components/rasad/Breadcrumbs";
@@ -20,7 +21,7 @@ const Contact = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = schema.safeParse(form);
     if (!result.success) {
@@ -31,11 +32,19 @@ const Contact = () => {
     }
     setErrors({});
     setSubmitting(true);
-    setTimeout(() => {
-      toast.success("شكراً لتواصلك! سنرد عليك خلال 24 ساعة.");
-      setForm({ name: "", email: "", subject: "", message: "" });
-      setSubmitting(false);
-    }, 700);
+    const { error } = await supabase.from("contact_messages").insert({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      subject: form.subject.trim(),
+      message: form.message.trim(),
+    });
+    setSubmitting(false);
+    if (error) {
+      toast.error("تعذّر إرسال الرسالة. حاول مجددًا.");
+      return;
+    }
+    toast.success("شكراً لتواصلك! سنرد عليك خلال 24 ساعة.");
+    setForm({ name: "", email: "", subject: "", message: "" });
   };
 
   const field = (key: keyof typeof form, label: string, type = "text", textarea = false) => (
