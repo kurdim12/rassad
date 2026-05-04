@@ -2,104 +2,120 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* RASAD Premium Dark Design System */
+    --background: 220 20% 5%;          /* #0A0C0F INK */
+    --foreground: 40 25% 92%;
+    --surface: 215 30% 9%;             /* #0F1722 deep navy */
+    --surface-2: 215 25% 12%;
+    --paper: 42 27% 92%;               /* #F0EDE6 */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 215 30% 9%;
+    --card-foreground: 40 25% 92%;
+    --popover: 215 30% 9%;
+    --popover-foreground: 40 25% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 5 65% 48%;              /* signal red #C8392D */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 5 80% 58%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --secondary: 215 25% 14%;
+    --secondary-foreground: 40 25% 92%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 215 20% 14%;
+    --muted-foreground: 0 0% 60%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 5 65% 48%;
+    --accent-foreground: 0 0% 100%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --verified: 152 68% 32%;           /* #1A8A5A */
+    --verified-foreground: 0 0% 100%;
+    --warning: 36 80% 52%;             /* #E8A020 */
+    --warning-foreground: 0 0% 8%;
+    --info: 212 50% 63%;               /* #6B9BD4 */
+    --info-foreground: 0 0% 8%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 5 65% 48%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 0 0% 100% / 0.08;
+    --input: 215 25% 14%;
+    --ring: 5 65% 48%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    --gradient-hero: radial-gradient(ellipse at top right, hsl(5 65% 48% / 0.15), transparent 60%),
+                     radial-gradient(ellipse at bottom left, hsl(212 50% 30% / 0.18), transparent 55%);
+    --gradient-signal: linear-gradient(135deg, hsl(5 65% 48%), hsl(5 80% 58%));
+    --gradient-card: linear-gradient(180deg, hsl(215 30% 11% / 0.9), hsl(215 30% 7% / 0.95));
+    --shadow-glow: 0 0 40px hsl(5 65% 48% / 0.25);
+    --shadow-elev: 0 12px 40px -12px hsl(0 0% 0% / 0.6);
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 215 30% 9%;
+    --sidebar-foreground: 40 25% 92%;
+    --sidebar-primary: 5 65% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 215 25% 14%;
+    --sidebar-accent-foreground: 40 25% 92%;
+    --sidebar-border: 0 0% 100% / 0.06;
+    --sidebar-ring: 5 65% 48%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
+
+  html { font-family: 'IBM Plex Sans Arabic', 'Tajawal', system-ui, sans-serif; }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(ellipse at 20% -10%, hsl(5 65% 35% / 0.08), transparent 50%),
+      radial-gradient(ellipse at 90% 10%, hsl(212 50% 25% / 0.08), transparent 50%),
+      linear-gradient(hsl(0 0% 100% / 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(0 0% 100% / 0.015) 1px, transparent 1px);
+    background-size: auto, auto, 56px 56px, 56px 56px;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Tajawal', 'IBM Plex Sans Arabic', sans-serif; font-weight: 800; letter-spacing: -0.01em; }
+
+  .font-mono, code, .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+}
+
+@layer components {
+  .glass-panel {
+    @apply rounded-2xl border border-white/[0.06] bg-[var(--gradient-card)] backdrop-blur-xl;
+    box-shadow: var(--shadow-elev);
+  }
+  .signal-glow { box-shadow: var(--shadow-glow); }
+  .hairline { @apply border border-white/[0.06]; }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-xs text-foreground/80;
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(hsl(0 0% 100% / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(0 0% 100% / 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .radar-bg {
+    background:
+      radial-gradient(circle at center, transparent 0, transparent 30%, hsl(5 65% 48% / 0.06) 31%, transparent 32%),
+      radial-gradient(circle at center, transparent 0, transparent 50%, hsl(5 65% 48% / 0.05) 51%, transparent 52%),
+      radial-gradient(circle at center, transparent 0, transparent 70%, hsl(5 65% 48% / 0.04) 71%, transparent 72%);
   }
 }
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 hsl(5 65% 48% / 0.55); }
+  70% { box-shadow: 0 0 0 18px hsl(5 65% 48% / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(5 65% 48% / 0); }
+}
+.pulse-ring { animation: pulse-ring 2.2s infinite; }
+
+@keyframes radar-sweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.radar-sweep { animation: radar-sweep 6s linear infinite; transform-origin: center; }
