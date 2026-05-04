@@ -55,7 +55,7 @@ export default function Dashboard() {
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
       .limit(20);
-    setHistory((data ?? []) as Verification[]);
+    setHistory((data ?? []) as unknown as Verification[]);
     setLoadingHistory(false);
   };
 
