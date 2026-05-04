@@ -12,9 +12,9 @@ import type { Verification } from "@/components/dashboard/types";
 
 const COLORS: Record<string, string> = {
   trusted: "hsl(var(--verified))",
-  fake: "hsl(var(--signal))",
-  suspicious: "hsl(var(--warn))",
-  uncertain: "hsl(var(--blue))",
+  fake: "hsl(var(--primary))",
+  suspicious: "hsl(var(--warning))",
+  uncertain: "hsl(var(--muted-foreground))",
 };
 const FALLBACK_COLOR = "hsl(var(--muted))";
 
