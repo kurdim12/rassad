@@ -38,28 +38,43 @@ const Reports = () => {
           <EmptyState message="لا توجد تقارير منشورة بعد." />
         ) : (
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {items.map((r, i) => (
-              <article key={r.id} className="glass-panel p-6 transition hover:-translate-y-0.5 hover:border-primary/30">
-                <div className="flex items-center justify-between">
-                  {r.category && <span className="chip mono">{r.category}</span>}
-                  <span className="mono text-[11px] text-muted-foreground">#{String(i + 1).padStart(3, "0")}</span>
-                </div>
-                <h3 className="mt-4 text-lg font-bold leading-8">{r.title}</h3>
-                {r.summary && <p className="mt-3 line-clamp-4 text-sm leading-7 text-muted-foreground">{r.summary}</p>}
-                <div className="mt-5 flex items-center justify-between border-t border-white/[0.06] pt-4 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5" />
-                    {format(new Date(r.published_at), "d MMM yyyy", { locale: ar })}
-                  </span>
-                  {r.body && (
-                    <span className="inline-flex items-center gap-1.5">
-                      <Clock className="h-3.5 w-3.5" />
-                      {Math.max(1, Math.round(r.body.length / 600))} د
-                    </span>
+            {items.map((r, i) => {
+              const img = (r.metadata as any)?.image_url as string | undefined;
+              const sources = (r.metadata as any)?.sources as string[] | undefined;
+              return (
+                <article key={r.id} className="glass-panel overflow-hidden transition hover:-translate-y-0.5 hover:border-primary/30">
+                  {img && (
+                    <div className="relative h-40 overflow-hidden">
+                      <img src={img} alt={r.title} className="h-full w-full object-cover" loading="lazy" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                    </div>
                   )}
-                </div>
-              </article>
-            ))}
+                  <div className="p-6">
+                    <div className="flex items-center justify-between">
+                      {r.category && <span className="chip mono">{r.category}</span>}
+                      <span className="mono text-[11px] text-muted-foreground">#{String(i + 1).padStart(3, "0")}</span>
+                    </div>
+                    <h3 className="mt-4 text-lg font-bold leading-8">{r.title}</h3>
+                    {r.summary && <p className="mt-3 line-clamp-4 text-sm leading-7 text-muted-foreground">{r.summary}</p>}
+                    <div className="mt-5 flex items-center justify-between border-t border-white/[0.06] pt-4 text-xs text-muted-foreground">
+                      <span className="inline-flex items-center gap-1.5">
+                        <Calendar className="h-3.5 w-3.5" />
+                        {format(new Date(r.published_at), "d MMM yyyy", { locale: ar })}
+                      </span>
+                      <div className="flex items-center gap-3">
+                        {sources && <span className="mono">{sources.length} مصدر</span>}
+                        {r.body && (
+                          <span className="inline-flex items-center gap-1.5">
+                            <Clock className="h-3.5 w-3.5" />
+                            {Math.max(1, Math.round(r.body.length / 600))} د
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         )}
       </section>
