@@ -44,8 +44,15 @@ const News = () => {
             {featured && (
               <article className="glass-panel mb-8 grid overflow-hidden md:grid-cols-2">
                 <div className="relative min-h-[280px] bg-gradient-to-br from-surface-2 to-background">
-                  <div className="absolute inset-0 grid-bg opacity-30" />
-                  <div className="absolute inset-0 radar-bg" />
+                  {(featured.metadata as any)?.image_url ? (
+                    <img src={(featured.metadata as any).image_url} alt={featured.title} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 grid-bg opacity-30" />
+                      <div className="absolute inset-0 radar-bg" />
+                    </>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
                   {featured.category && <div className="absolute end-4 top-4 chip mono">{featured.category}</div>}
                 </div>
                 <div className="p-8">
@@ -56,6 +63,9 @@ const News = () => {
                     {featured.confidence !== null && <ConfidenceRing value={featured.confidence} size={68} label="ثقة" />}
                     <div className="space-y-1 text-xs text-muted-foreground">
                       <div>{formatDistanceToNow(new Date(featured.published_at), { addSuffix: true, locale: ar })}</div>
+                      {Array.isArray((featured.metadata as any)?.sources) && (
+                        <div className="mono">{(featured.metadata as any).sources.length} مصادر</div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -63,20 +73,35 @@ const News = () => {
             )}
 
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {rest.map((n) => (
-                <article key={n.id} className="glass-panel p-5 transition hover:-translate-y-0.5 hover:border-primary/30">
-                  <div className="flex items-center justify-between">
-                    {n.category && <span className="chip mono">{n.category}</span>}
-                    {n.verdict && <VerdictBadge verdict={n.verdict === "uncertain" ? "suspicious" : n.verdict} />}
-                  </div>
-                  <h3 className="mt-4 text-base font-bold leading-7">{n.title}</h3>
-                  {n.summary && <p className="mt-2 line-clamp-3 text-xs leading-6 text-muted-foreground">{n.summary}</p>}
-                  <div className="mt-4 flex items-center justify-between border-t border-white/[0.06] pt-3 text-xs text-muted-foreground">
-                    {n.confidence !== null && <span className="mono">CONF {n.confidence}%</span>}
-                    <span>{formatDistanceToNow(new Date(n.published_at), { addSuffix: true, locale: ar })}</span>
-                  </div>
-                </article>
-              ))}
+              {rest.map((n) => {
+                const img = (n.metadata as any)?.image_url as string | undefined;
+                const sources = (n.metadata as any)?.sources as string[] | undefined;
+                return (
+                  <article key={n.id} className="glass-panel overflow-hidden transition hover:-translate-y-0.5 hover:border-primary/30">
+                    <div className="relative h-44 overflow-hidden bg-surface-2">
+                      {img ? (
+                        <img src={img} alt={n.title} className="h-full w-full object-cover transition group-hover:scale-105" loading="lazy" />
+                      ) : (
+                        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg,#16213e,#0f1722)" }} />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+                      {n.verdict && <div className="absolute end-3 top-3"><VerdictBadge verdict={n.verdict === "uncertain" ? "suspicious" : n.verdict} /></div>}
+                      {n.category && <span className="absolute start-3 top-3 chip mono">{n.category}</span>}
+                    </div>
+                    <div className="p-5">
+                      <h3 className="text-base font-bold leading-7 line-clamp-2">{n.title}</h3>
+                      {n.summary && <p className="mt-2 line-clamp-3 text-xs leading-6 text-muted-foreground">{n.summary}</p>}
+                      <div className="mt-4 flex items-center justify-between border-t border-white/[0.06] pt-3 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-3">
+                          {n.confidence !== null && <span className="mono">CONF {n.confidence}%</span>}
+                          {sources && <span className="mono">{sources.length} مصدر</span>}
+                        </div>
+                        <span>{formatDistanceToNow(new Date(n.published_at), { addSuffix: true, locale: ar })}</span>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </>
         )}

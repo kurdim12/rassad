@@ -4,7 +4,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useArticles } from "@/hooks/useArticles";
 import { GenerateButton, EmptyState } from "@/components/rasad/AdminGenerate";
 import { Seo } from "@/components/seo/Seo";
-import { Bot, ShieldCheck } from "lucide-react";
+import { Bot, ShieldCheck, FileText, Image as ImageIcon, Video, Mic, Share2, Link2, Network, MapPin } from "lucide-react";
+
+const ICONS: Record<string, any> = { FileText, Image: ImageIcon, Video, Mic, Share2, Link2, Network, MapPin, Bot };
 
 const Agents = () => {
   const { items, loading, generate } = useArticles("agent", 18);
@@ -36,24 +38,31 @@ const Agents = () => {
           <EmptyState message="لا يوجد وكلاء معرّفون بعد." />
         ) : (
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {items.map((a) => (
-              <article key={a.id} className="glass-panel p-6">
-                <div className="flex items-center gap-3">
-                  <div className="grid h-12 w-12 place-items-center rounded-xl border border-white/[0.08] bg-primary/10 text-primary">
-                    <Bot className="h-6 w-6" />
+            {items.map((a) => {
+              const meta = (a.metadata as any) || {};
+              const Icon = ICONS[meta.icon] || Bot;
+              return (
+                <article key={a.id} className="glass-panel p-6 transition hover:-translate-y-0.5 hover:border-primary/30">
+                  <div className="flex items-center gap-3">
+                    <div className="grid h-12 w-12 place-items-center rounded-xl border border-white/[0.08] bg-primary/10 text-primary">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="truncate text-base font-bold">{a.title}</h3>
+                      {a.category && <span className="mono text-[11px] text-muted-foreground">{a.category}</span>}
+                    </div>
                   </div>
-                  <div className="min-w-0">
-                    <h3 className="truncate text-base font-bold">{a.title}</h3>
-                    {a.category && <span className="mono text-[11px] text-muted-foreground">{a.category}</span>}
+                  {a.summary && <p className="mt-4 text-sm leading-7 text-muted-foreground">{a.summary}</p>}
+                  <div className="mt-5 flex items-center justify-between border-t border-white/[0.06] pt-4 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-verified" /> {meta.status || "نشط"}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="mono">UPTIME {meta.uptime || "99.9%"}</span>
+                      <span className="mono">LAT {meta.latency_ms || 240}ms</span>
+                    </div>
                   </div>
-                </div>
-                {a.summary && <p className="mt-4 text-sm leading-7 text-muted-foreground">{a.summary}</p>}
-                <div className="mt-5 flex items-center gap-2 border-t border-white/[0.06] pt-4 text-xs text-muted-foreground">
-                  <ShieldCheck className="h-3.5 w-3.5 text-verified" />
-                  <span>وكيل نشط</span>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         )}
       </section>

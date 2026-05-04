@@ -47,21 +47,30 @@ const Social = () => {
           <EmptyState message="لا توجد منشورات سوشيال ميديا بعد." />
         ) : (
           <div className="grid gap-5 md:grid-cols-2">
-            {items.map((p) => (
-              <article key={p.id} className="glass-panel p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-base font-bold leading-7">{p.title}</h3>
-                    {p.summary && <p className="mt-2 text-sm leading-7 text-muted-foreground">{p.summary}</p>}
-                    <div className="mt-4 flex items-center gap-3 text-xs text-muted-foreground">
-                      {p.verdict && <VerdictBadge verdict={p.verdict === "uncertain" ? "suspicious" : p.verdict} />}
-                      <span>{formatDistanceToNow(new Date(p.published_at), { addSuffix: true, locale: ar })}</span>
+            {items.map((p) => {
+              const eng = (p.metadata as any)?.engagement as string | undefined;
+              const sources = (p.metadata as any)?.sources as string[] | undefined;
+              return (
+                <article key={p.id} className="glass-panel p-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0 flex-1">
+                      <div className="mb-3 flex items-center gap-2">
+                        {p.category && <span className="chip mono">{p.category}</span>}
+                        {eng && <span className="mono text-[11px] text-muted-foreground">{eng} تفاعل</span>}
+                      </div>
+                      <h3 className="text-base font-bold leading-7">{p.title}</h3>
+                      {p.summary && <p className="mt-2 text-sm leading-7 text-muted-foreground">{p.summary}</p>}
+                      <div className="mt-4 flex items-center gap-3 text-xs text-muted-foreground">
+                        {p.verdict && <VerdictBadge verdict={p.verdict === "uncertain" ? "suspicious" : p.verdict} />}
+                        {sources && <span className="mono">{sources.length} مصدر</span>}
+                        <span>{formatDistanceToNow(new Date(p.published_at), { addSuffix: true, locale: ar })}</span>
+                      </div>
                     </div>
+                    {p.confidence !== null && <ConfidenceRing value={p.confidence} size={64} />}
                   </div>
-                  {p.confidence !== null && <ConfidenceRing value={p.confidence} size={64} />}
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         )}
       </section>
