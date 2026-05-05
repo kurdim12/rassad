@@ -119,6 +119,25 @@ Deno.serve(async (req) => {
     const explanation = String(args.explanation ?? "");
     const sources = Array.isArray(args.sources) ? args.sources.slice(0, 5) : [];
 
+    // Persist only for authenticated users; guests get the verdict back without saving
+    if (!userId) {
+      const guestRow = {
+        id: crypto.randomUUID(),
+        user_id: null,
+        input_text: input || (imageUrl ? "[صورة مرفوعة]" : ""),
+        input_url: isUrl ? input : null,
+        image_url: imageUrl,
+        kind,
+        verdict,
+        confidence,
+        explanation,
+        sources,
+        model: "google/gemini-2.5-flash",
+        created_at: new Date().toISOString(),
+      };
+      return json({ verification: guestRow, guest: true }, 200);
+    }
+
     const { data: row, error: insErr } = await supabase
       .from("verifications")
       .insert({
