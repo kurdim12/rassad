@@ -47,17 +47,18 @@ Deno.serve(async (req) => {
 
   try {
     const auth = req.headers.get("Authorization");
-    if (!auth) return json({ error: "Unauthorized" }, 401);
-
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? Deno.env.get("SUPABASE_PUBLISHABLE_KEY")!;
     const supabase = createClient(supabaseUrl, anonKey, {
-      global: { headers: { Authorization: auth } },
+      global: auth ? { headers: { Authorization: auth } } : {},
     });
 
-    const { data: userData, error: userErr } = await supabase.auth.getUser();
-    if (userErr || !userData?.user?.id) return json({ error: "Unauthorized" }, 401);
-    const userId = userData.user.id;
+    // Optional auth — guests allowed (result returned but not persisted)
+    let userId: string | null = null;
+    if (auth) {
+      const { data: userData } = await supabase.auth.getUser();
+      userId = userData?.user?.id ?? null;
+    }
 
     const body = await req.json().catch(() => ({}));
     const kind = (body.kind as string) || "text";
@@ -117,6 +118,25 @@ Deno.serve(async (req) => {
     const confidence = Math.max(0, Math.min(100, Number(args.confidence) | 0));
     const explanation = String(args.explanation ?? "");
     const sources = Array.isArray(args.sources) ? args.sources.slice(0, 5) : [];
+
+    // Persist only for authenticated users; guests get the verdict back without saving
+    if (!userId) {
+      const guestRow = {
+        id: crypto.randomUUID(),
+        user_id: null,
+        input_text: input || (imageUrl ? "[صورة مرفوعة]" : ""),
+        input_url: isUrl ? input : null,
+        image_url: imageUrl,
+        kind,
+        verdict,
+        confidence,
+        explanation,
+        sources,
+        model: "google/gemini-2.5-flash",
+        created_at: new Date().toISOString(),
+      };
+      return json({ verification: guestRow, guest: true }, 200);
+    }
 
     const { data: row, error: insErr } = await supabase
       .from("verifications")
