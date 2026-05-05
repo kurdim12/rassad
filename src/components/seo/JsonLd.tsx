@@ -6,7 +6,7 @@ export const JsonLd = ({ data }: { data: Record<string, unknown> | Record<string
   </Helmet>
 );
 
-const SITE = "https://rassad.lovable.app";
+const SITE = "https://rassad.com";
 
 export const organizationSchema = {
   "@context": "https://schema.org",
