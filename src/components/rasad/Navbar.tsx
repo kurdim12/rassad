@@ -10,7 +10,7 @@ const links = [
   { to: "/how-it-works", label: "كيف يعمل" },
   { to: "/agents", label: "الوكلاء" },
   { to: "/news", label: "الأخبار" },
-  { to: "/pricing", label: "الأسعار" },
+  
   { to: "/about", label: "عن رصد" },
   { to: "/contact", label: "تواصل" },
 ];

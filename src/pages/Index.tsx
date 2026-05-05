@@ -93,7 +93,7 @@ const TESTIMONIALS = [
 ];
 
 const Home = () => {
-  const [billing, setBilling] = useState<"monthly" | "yearly">("monthly");
+  
 
   return (
     <Layout>
@@ -336,8 +336,8 @@ const Home = () => {
 
         <div className="grid gap-5 md:grid-cols-3">
           {[
-            { Icon: User, t: "الأفراد", d: "تحقق من أي خبر أو ادعاء قبل مشاركته، وكن جزءاً من مجتمع يقاوم التضليل.", to: "/pricing" },
-            { Icon: Building2, t: "الشركات والإعلام", d: "احم سمعة مؤسستك وموظفيك من الأخبار الكاذبة، وادعم قراراتك بمعلومة موثقة.", to: "/pricing" },
+            { Icon: User, t: "الأفراد", d: "تحقق من أي خبر أو ادعاء قبل مشاركته، وكن جزءاً من مجتمع يقاوم التضليل.", to: "/verify" },
+            { Icon: Building2, t: "الشركات والإعلام", d: "احم سمعة مؤسستك وموظفيك من الأخبار الكاذبة، وادعم قراراتك بمعلومة موثقة.", to: "/contact" },
             { Icon: Landmark, t: "الحكومات والجهات الرسمية", d: "أدوات مؤسسية متقدمة لرصد الحملات الممنهجة والتحقق على نطاق واسع.", to: "/contact" },
           ].map((a, i) => (
             <div key={i} className="glass-panel p-7">
@@ -393,118 +393,6 @@ const Home = () => {
               </figure>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* PRICING (mini) */}
-      <section className="container py-20">
-        <SectionHeader
-          eyebrow="الأسعار"
-          title="باقات تناسب حجم استخدامك"
-          subtitle="ابدأ مجاناً وارقَ الباقة عند الحاجة. لا التزامات طويلة الأمد."
-        />
-
-        <div className="mb-8 flex items-center justify-center gap-3">
-          <button
-            onClick={() => setBilling("monthly")}
-            className={`rounded-md px-4 py-2 text-sm font-semibold transition ${
-              billing === "monthly" ? "bg-white/[0.08] text-foreground" : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            شهري
-          </button>
-          <button
-            onClick={() => setBilling("yearly")}
-            className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition ${
-              billing === "yearly" ? "bg-white/[0.08] text-foreground" : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            سنوي
-            <span className="rounded-full bg-verified/20 px-2 py-0.5 text-[10px] font-bold text-verified">وفّر 20%</span>
-          </button>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-3">
-          {[
-            {
-              name: "مجاني",
-              price: "0",
-              period: "للأبد",
-              desc: "للمستخدمين الأفراد للتجربة والاستخدام الخفيف.",
-              features: ["20 عملية تحقق شهرياً", "تحقق من النص والصورة", "تقارير أساسية", "دعم عبر البريد"],
-              cta: "ابدأ مجاناً",
-              to: "/signup",
-              highlight: false,
-            },
-            {
-              name: "احترافي",
-              price: billing === "monthly" ? "29" : "23",
-              period: billing === "monthly" ? "/شهر" : "/شهر · سنوي",
-              desc: "للصحفيين والمؤسسات المتوسطة.",
-              features: ["تحقق غير محدود", "كل أنواع المحتوى (نص/صورة/فيديو/صوت)", "تصدير PDF و CSV", "وصول للـ API", "دعم ذو أولوية"],
-              cta: "اشترك الآن",
-              to: "/signup",
-              highlight: true,
-            },
-            {
-              name: "مؤسسي",
-              price: "—",
-              period: "تواصل معنا",
-              desc: "للمنظمات الكبرى والجهات الحكومية.",
-              features: ["كل ما في الاحترافي", "تكامل مخصّص (SSO/SAML)", "SLA مضمون 99.9%", "مدير حساب مخصّص", "تدريب الفريق"],
-              cta: "تحدث مع المبيعات",
-              to: "/contact",
-              highlight: false,
-            },
-          ].map((p, i) => (
-            <div
-              key={i}
-              className={`glass-panel relative flex flex-col p-7 ${
-                p.highlight ? "border-primary/40 ring-1 ring-primary/30" : ""
-              }`}
-            >
-              {p.highlight && (
-                <div className="absolute -top-3 start-7 inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-bold text-primary-foreground signal-glow">
-                  <Award className="h-3 w-3" /> الأكثر شيوعاً
-                </div>
-              )}
-              <div className="text-sm font-bold text-muted-foreground">{p.name}</div>
-              <div className="mt-3 flex items-baseline gap-2">
-                <span className="display text-5xl font-extrabold text-foreground">
-                  {p.price !== "—" ? `$${p.price}` : "—"}
-                </span>
-                <span className="text-xs text-muted-foreground">{p.period}</span>
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
-
-              <ul className="mt-6 flex-1 space-y-3 text-sm">
-                {p.features.map((f, j) => (
-                  <li key={j} className="flex items-start gap-2">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-verified" />
-                    <span className="text-foreground/90">{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Link
-                to={p.to}
-                className={`mt-7 inline-flex items-center justify-center gap-2 rounded-md px-4 py-3 text-sm font-bold transition ${
-                  p.highlight
-                    ? "bg-gradient-to-b from-primary to-primary/80 text-primary-foreground signal-glow ring-1 ring-white/10 hover:brightness-110"
-                    : "border border-white/[0.08] bg-white/[0.03] text-foreground hover:bg-white/[0.06]"
-                }`}
-                style={{ minHeight: 48 }}
-              >
-                {p.cta} <ArrowLeft className="h-4 w-4" />
-              </Link>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-10 flex justify-center">
-          <Link to="/pricing" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
-            قارن جميع الباقات بالتفصيل <ArrowLeft className="h-4 w-4" />
-          </Link>
         </div>
       </section>
 

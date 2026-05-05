@@ -23,7 +23,7 @@ export const Footer = () => (
           <li><Link to="/agents" className="hover:text-foreground">الوكلاء</Link></li>
           <li><Link to="/reports" className="hover:text-foreground">التقارير</Link></li>
           <li><Link to="/social" className="hover:text-foreground">السوشال ميديا</Link></li>
-          <li><Link to="/pricing" className="hover:text-foreground">الأسعار</Link></li>
+          
         </ul>
       </div>
 

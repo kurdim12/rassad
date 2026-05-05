@@ -18,7 +18,7 @@ import Contact from "./pages/Contact.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import Terms from "./pages/Terms.tsx";
 import HowItWorks from "./pages/HowItWorks.tsx";
-import Pricing from "./pages/Pricing.tsx";
+
 import Login from "./pages/auth/Login.tsx";
 import Signup from "./pages/auth/Signup.tsx";
 import ForgotPassword from "./pages/auth/ForgotPassword.tsx";
@@ -48,7 +48,7 @@ const App = () => (
               <Route path="/verify" element={<VerifyPublic />} />
               <Route path="/live" element={<Live />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/pricing" element={<Pricing />} />
+              
               <Route path="/news" element={<News />} />
               <Route path="/agents" element={<Agents />} />
               <Route path="/social" element={<Social />} />
