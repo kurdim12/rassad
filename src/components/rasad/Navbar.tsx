@@ -5,10 +5,11 @@ import { Logo } from "./Logo";
 
 const links = [
   { to: "/", label: "الرئيسية" },
+  { to: "/verify", label: "تحقّق" },
+  { to: "/live", label: "البث المباشر" },
   { to: "/how-it-works", label: "كيف يعمل" },
-  { to: "/news", label: "الأخبار" },
-  { to: "/reports", label: "التقارير" },
   { to: "/agents", label: "الوكلاء" },
+  { to: "/news", label: "الأخبار" },
   { to: "/pricing", label: "الأسعار" },
   { to: "/about", label: "عن رصد" },
   { to: "/contact", label: "تواصل" },

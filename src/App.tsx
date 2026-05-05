@@ -7,6 +7,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import Index from "./pages/Index.tsx";
+import VerifyPublic from "./pages/VerifyPublic.tsx";
+import Live from "./pages/Live.tsx";
 import News from "./pages/News.tsx";
 import Agents from "./pages/Agents.tsx";
 import Social from "./pages/Social.tsx";
@@ -43,6 +45,8 @@ const App = () => (
           <AuthProvider>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/verify" element={<VerifyPublic />} />
+              <Route path="/live" element={<Live />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/news" element={<News />} />
