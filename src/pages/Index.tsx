@@ -3,6 +3,9 @@ import { SectionHeader } from "@/components/rasad/SectionHeader";
 import { VerdictBadge } from "@/components/rasad/Badge";
 import { ConfidenceRing } from "@/components/rasad/ConfidenceRing";
 import { DocumentedFakes } from "@/components/rasad/DocumentedFakes";
+import { LiveTicker } from "@/components/rasad/LiveTicker";
+import { CountUp } from "@/components/rasad/CountUp";
+import { Reveal } from "@/components/rasad/Reveal";
 import { Seo } from "@/components/seo/Seo";
 import { JsonLd, organizationSchema, webApplicationSchema, buildFaqSchema } from "@/components/seo/JsonLd";
 import { Link } from "react-router-dom";
@@ -222,21 +225,41 @@ const Home = () => {
       <section className="border-y border-white/[0.06] bg-surface/40">
         <div className="container grid gap-6 py-10 md:grid-cols-4">
           {[
-            { v: "+10,000", l: "عملية تحقق منجزة", Icon: Activity },
-            { v: "99.9%", l: "دقة التحليل", Icon: Target },
-            { v: "< 30 ثانية", l: "متوسط زمن الاستجابة", Icon: Zap },
-            { v: "+500", l: "مستخدم موثوق", Icon: Users },
+            { end: 10000, prefix: "+", suffix: "", l: "عملية تحقق منجزة", Icon: Activity },
+            { end: 99.9, suffix: "%", decimals: 1, l: "دقة التحليل", Icon: Target },
+            { end: 30, prefix: "< ", suffix: " ثانية", l: "متوسط زمن الاستجابة", Icon: Zap },
+            { end: 500, prefix: "+", l: "مستخدم موثوق", Icon: Users },
           ].map((s, i) => (
-            <div key={i} className="flex items-center gap-4">
-              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-primary">
-                <s.Icon className="h-6 w-6" strokeWidth={1.75} />
+            <Reveal key={i} delay={i * 80}>
+              <div className="flex items-center gap-4">
+                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-primary">
+                  <s.Icon className="h-6 w-6" strokeWidth={1.75} />
+                </div>
+                <div>
+                  <CountUp
+                    end={s.end}
+                    prefix={s.prefix ?? ""}
+                    suffix={s.suffix ?? ""}
+                    decimals={s.decimals ?? 0}
+                    className="display text-2xl font-extrabold text-foreground md:text-3xl"
+                  />
+                  <div className="mt-0.5 text-xs text-muted-foreground">{s.l}</div>
+                </div>
               </div>
-              <div>
-                <div className="display text-2xl font-extrabold text-foreground md:text-3xl">{s.v}</div>
-                <div className="mt-0.5 text-xs text-muted-foreground">{s.l}</div>
-              </div>
-            </div>
+            </Reveal>
           ))}
+        </div>
+      </section>
+
+      {/* LIVE TICKER (compact) */}
+      <section className="container py-16">
+        <SectionHeader
+          eyebrow="البث المباشر"
+          title="ما يجري الآن في الفضاء الرقمي"
+          subtitle="عيّنة لحظية من أحدث الأخبار والادعاءات المُحلَّلة. تحديث كل 12 ثانية."
+        />
+        <div className="mx-auto max-w-3xl">
+          <LiveTicker variant="compact" limit={5} />
         </div>
       </section>
 

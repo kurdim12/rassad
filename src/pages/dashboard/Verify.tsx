@@ -13,6 +13,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { VerdictBadge } from "@/components/rasad/Badge";
 import { ConfidenceRing } from "@/components/rasad/ConfidenceRing";
+import { AgentBreakdownPanel } from "@/components/rasad/AgentBreakdownPanel";
+import { WebSourcesPanel } from "@/components/rasad/WebSourcesPanel";
+import { exportAsJSON, exportAsCSV, copyShareableText } from "@/lib/export-verdict";
+import { FileJson, Copy } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ar } from "date-fns/locale";
 import type { Verification, Collection } from "@/components/dashboard/types";
@@ -189,27 +193,51 @@ export default function Verify() {
         </Tabs>
 
         {latest && !analyzing && (
-          <div className="mt-6 flex flex-col items-start gap-6 rounded-xl border border-border/50 bg-background/40 p-5 sm:flex-row">
-            <ConfidenceRing value={latest.confidence} size={84} label="ثقة" />
-            <div className="min-w-0 flex-1">
-              <div className="mb-2 flex flex-wrap items-center gap-2">
-                <VerdictBadge verdict={latest.verdict === "uncertain" ? "suspicious" : latest.verdict} />
-                <span className="mono text-xs text-muted-foreground">CONF {latest.confidence}%</span>
-                <Button size="sm" variant="ghost" className="ms-auto gap-1" onClick={() => setSaveTarget(latest)}>
-                  <Save className="h-3.5 w-3.5" /> حفظ
-                </Button>
-              </div>
-              <p className="text-sm font-semibold">{latest.input_text}</p>
-              {latest.image_url && <img src={latest.image_url} alt="" className="mt-3 max-h-40 rounded-md border border-border/50" />}
-              {latest.explanation && <p className="mt-3 text-sm leading-7 text-muted-foreground">{latest.explanation}</p>}
-              {latest.sources?.length > 0 && (
-                <div className="mt-4 border-t border-border/50 pt-3">
-                  <div className="mb-2 mono text-[11px] tracking-widest text-muted-foreground">المصادر</div>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground">
-                    {latest.sources.map((s, i) => <li key={i}>• {s.title}{s.note ? ` — ${s.note}` : ""}</li>)}
-                  </ul>
+          <div className="mt-6 space-y-4">
+            <div className="flex flex-col items-start gap-6 rounded-xl border border-border/50 bg-background/40 p-5 sm:flex-row">
+              <ConfidenceRing value={latest.confidence} size={84} label="ثقة" />
+              <div className="min-w-0 flex-1">
+                <div className="mb-2 flex flex-wrap items-center gap-2">
+                  <VerdictBadge verdict={latest.verdict === "uncertain" ? "suspicious" : latest.verdict} />
+                  <span className="mono text-xs text-muted-foreground">CONF {latest.confidence}%</span>
+                  <Button size="sm" variant="ghost" className="ms-auto gap-1" onClick={() => setSaveTarget(latest)}>
+                    <Save className="h-3.5 w-3.5" /> حفظ
+                  </Button>
                 </div>
-              )}
+                <p className="text-sm font-semibold">{latest.input_text}</p>
+                {latest.image_url && <img src={latest.image_url} alt="" className="mt-3 max-h-40 rounded-md border border-border/50" />}
+                {latest.explanation && <p className="mt-3 text-sm leading-7 text-muted-foreground">{latest.explanation}</p>}
+              </div>
+            </div>
+
+            <AgentBreakdownPanel
+              verdict={latest.verdict}
+              confidence={latest.confidence}
+              explanation={latest.explanation ?? undefined}
+            />
+
+            {latest.sources?.length > 0 && (
+              <WebSourcesPanel sources={latest.sources as { title: string; note?: string }[]} />
+            )}
+
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" size="sm" className="gap-1.5" onClick={() => exportAsJSON(latest as never)}>
+                <FileJson className="h-3.5 w-3.5" /> JSON
+              </Button>
+              <Button variant="outline" size="sm" className="gap-1.5" onClick={() => exportAsCSV(latest as never)}>
+                <Download className="h-3.5 w-3.5" /> CSV
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-1.5"
+                onClick={async () => {
+                  await copyShareableText(latest as never);
+                  toast.success("نُسخ الملخص");
+                }}
+              >
+                <Copy className="h-3.5 w-3.5" /> نسخ الملخص
+              </Button>
             </div>
           </div>
         )}
