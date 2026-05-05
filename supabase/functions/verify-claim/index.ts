@@ -47,17 +47,18 @@ Deno.serve(async (req) => {
 
   try {
     const auth = req.headers.get("Authorization");
-    if (!auth) return json({ error: "Unauthorized" }, 401);
-
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? Deno.env.get("SUPABASE_PUBLISHABLE_KEY")!;
     const supabase = createClient(supabaseUrl, anonKey, {
-      global: { headers: { Authorization: auth } },
+      global: auth ? { headers: { Authorization: auth } } : {},
     });
 
-    const { data: userData, error: userErr } = await supabase.auth.getUser();
-    if (userErr || !userData?.user?.id) return json({ error: "Unauthorized" }, 401);
-    const userId = userData.user.id;
+    // Optional auth — guests allowed (result returned but not persisted)
+    let userId: string | null = null;
+    if (auth) {
+      const { data: userData } = await supabase.auth.getUser();
+      userId = userData?.user?.id ?? null;
+    }
 
     const body = await req.json().catch(() => ({}));
     const kind = (body.kind as string) || "text";
